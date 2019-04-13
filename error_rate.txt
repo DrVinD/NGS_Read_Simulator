@@ -1,0 +1,51 @@
+==================
+ASSIGNMENT PART II
+==================
+
+
+After installing bwa alignment tool, run the following commands accordingly...
+
+------------------------------------------------------------
+----------Create the index for the reference genome---------
+------------------------------------------------------------
+
+=> bwa index -p hg19bwaidx [-a bwtsw|is]  {REFERENCE_FILE.fa}
+
+Note :  bwtsw (does not work for short genomes) and
+        is (does not work for long genomes)
+
+
+------------------------------------------------------------
+---Mapping short reads to the reference genome, eg hg38.fa--
+------------------------------------------------------------
+
+1. Align sequences:
+
+=> bwa aln -t 4 hg19bwaidx {SIMULATED_FASTQ.fq} >  {BWA_ALIGNMENT.bwa}
+
+2. Create alignment in the SAM format (a generic format for storing large nucleotide sequence alignments):
+
+=>bwa samse hg19bwaidx {BWA_ALIGNMENT.bwa} {REFERENCE_FILE.fa} > {ALIGNED_VALUES.sam}
+
+
+------------------------------------------------------------
+-------------------To Find the Error rate-------------------
+------------------------------------------------------------
+
+On analyzing the sam output one can figure out the mapped and unmapped reads...
+
+A = Number of Aligned Reads to the Reference genome:
+=> cut -f10 {ALIGNED_VALUES.sam} | sort | uniq | wc -l
+
+
+B = Number of Uniquely Mapped Reads:
+=>grep -c XT:A:U {ALIGNED_VALUES.sam}
+
+
+C = Number of Multi Hit Reads
+grep -c XT:A:R sequence.txt.sam
+
+
+D = Number of reads wrongly aligned = (No. of participated reads for alignment)- (uniqly mapped + multi hit map) [A-(B-C) = D]
+
+Error Rate = (Number of reads wrongly aligned)/(Mapped Reads) [Error Rate = D/A]
