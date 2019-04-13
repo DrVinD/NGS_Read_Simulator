@@ -1,4 +1,4 @@
-Next Generation Sequencing Read Simulator
+#Next Generation Sequencing Read Simulator
 
 To simulate a NGS Sequencer we need to have a reference genome first. Starting from the reference genome, as we know a sequencer takes input the fragmented DNA copies to read the DNA and the resultant reading is termed as READS. Therefore to mimic the sequencer we randomly pick reads from the reference genome .fa file(fasta file) by computationaly generating random numbers using random library in python to mimic the starting positions of READS.
 
